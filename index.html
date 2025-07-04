@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>작심큰일 챌린지 - 문제 풀이 공간</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 공통 컴포넌트 */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 16px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #E33D37;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: #E33D37;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #d12b25;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: #E33D37;
+            border: 2px solid #E33D37;
+        }
+        
+        .btn-outline:hover {
+            background: #E33D37;
+            color: white;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            transition: transform 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #E33D37;
+        }
+        
+        .badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .badge-primary {
+            background: #cce5ff;
+            color: #0056b3;
+        }
+        
+        /* 페이지별 스타일 - 수정된 부분 */
+        .page {
+            display: none;
+            min-height: 100vh;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* 메인 콘텐츠 스타일 - 새로 추가 */
+        .main-content {
+            display: none;
+        }
+        
+        .main-content.active {
+            display: block;
+        }
+        
+        /* 로그인 페이지 */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #E33D37 0%, #d12b25 100%);
+        }
+        
+        .login-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .login-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #E33D37;
+            margin-bottom: 8px;
+        }
+        
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .test-account {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* 캘린더 스타일 */
+        .calendar-week {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .calendar-day {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-day.completed {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        
+        .calendar-day.today {
+            background: #E33D37;
+            border-color: #E33D37;
+            color: white;
+        }
+        
+        .calendar-day.locked {
+            background: #f8f9fa;
+            color: #999;
+            cursor: not-allowed;
+        }
+        
+        .calendar-day.completed::after {
+            content: "✓";
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            background: #28a745;
+            border-radius: 50%;
+            font-size: 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* IDE 스타일 */
+        .ide-container {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 1px solid #3e3e3e;
+        }
+        
+        .ide-header {
+            background: #2d2d2d;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .ide-tab {
+            background: #1e1e1e;
+            color: #ccc;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            border: none;
+        }
+        
+        .code-editor {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: 300px;
+            border: none;
+            resize: vertical;
+            outline: none;
+            width: 100%;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        
+        /* 문법 하이라이팅 */
+        .code-keyword { color: #c678dd; font-weight: 600; }
+        .code-function { color: #61afef; }
+        .code-string { color: #98c379; }
+        .code-comment { color: #5c6370; font-style: italic; }
+        .code-number { color: #d19a66; }
+        .code-operator { color: #56b6c2; }
+        .code-variable { color: #e06c75; }
+        .code-builtin { color: #e5c07b; }
+        
+        /* 타이머 */
+        .timer-display {
+            background: #E33D37;
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .timer-time {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        /* 모달 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        /* 통계 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #E33D37;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .card {
+                padding: 16px;
+            }
+            
+            .login-card {
+                padding: 24px;
+                margin: 16px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* 네비게이션 */
+        .main-nav {
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0;
+        }
+        
+        .nav-list {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+        }
+        
+        .nav-item {
+            padding: 16px 24px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .nav-item.active {
+            border-bottom-color: #E33D37;
+            color: #E33D37;
+        }
+        
+        /* 애니메이션 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        /* 알림 */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <!-- 로그인 페이지 -->
+    <div id="login-page" class="page active">
+        <div class="login-container">
+            <div class="login-card fade-in">
+                <div class="login-header">
+                    <img src="https://static.spartacodingclub.kr/emo/staff/scc/sc_bigwork_logo.png" alt="작심큰일 로고">
+                    <h1>작심큰일 챌린지</h1>
+                    <p>문제 풀이 공간에 오신 것을 환영합니다</p>
+                </div>
+                
+                <div class="test-account">
+                    <strong>🧪 테스트 계정</strong><br>
+                    이메일: test@example.com<br>
+                    연락처: 010-1234-5678
+                </div>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label">이메일</label>
+                        <input type="email" id="email" class="form-input" placeholder="이메일을 입력하세요" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">연락처</label>
+                        <input type="tel" id="phone" class="form-input" placeholder="010-1234-5678" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">로그인</button>
+                </form>
+                
+                <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                    <p style="font-size: 12px; color: #666;">
+                        등록된 이메일과 연락처로만 접근 가능합니다.<br>
+                        문의사항은 교육운영실로 연락해주세요.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메인 앱 -->
+    <div id="main-app" class="page">
+        <!-- 헤더 -->
+        <div class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <img src="https://static.spartacodingclub.kr/emo/staff/scc/sc_bigwork_logo.png" alt="로고">
+                        <span class="logo-text">작심큰일 챌린지</span>
+                    </div>
+                    <div class="user-info">
+                        <span id="user-name">홍길동님 (Python Level 1)</span>
+                        <button class="btn btn-secondary" onclick="logout()">로그아웃</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 네비게이션 -->
+        <div class="main-nav">
+            <div class="container">
+                <div class="nav-list">
+                    <div class="nav-item active" onclick="showMainPage('today-problems')">오늘의 문제</div>
+                    <div class="nav-item" onclick="showMainPage('my-submissions')">내 제출 기록</div>
+                    <div class="nav-item" onclick="showMainPage('til-submit')">TIL 제출</div>
+                    <div class="nav-item" onclick="showMainPage('mypage')">마이페이지</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 오늘의 문제 페이지 -->
+        <div id="today-problems" class="main-content active">
+            <div class="container" style="padding: 40px 20px;">
+                <div style="margin-bottom: 30px;">
+                    <h1 style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">오늘의 문제</h1>
+                    <p style="color: #666;">2025년 7월 3일 (목) - 매일 오전 9시에 새로운 문제가 공개됩니다.</p>
+                </div>
+
+                <!-- 2주 진행 현황 -->
+                <div class="card">
+                    <div class="card-title">📅 2주 챌린지 진행 현황</div>
+                    <div style="display: flex; gap: 32px; margin-bottom: 20px;">
+                        <div style="flex: 1;">
+                            <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">1주차 (7/1-7/7)</div>
+                            <div class="calendar-week">
+                                <div class="calendar-day completed" title="7/1 완료 (89%)">1</div>
+                                <div class="calendar-day completed" title="7/2 완료 (82%)">2</div>
+                                <div class="calendar-day today" title="7/3 오늘 (45%)">3</div>
+                                <div class="calendar-day locked" title="7/4 예정">4</div>
+                                <div class="calendar-day locked" title="7/5 예정">5</div>
+                                <div class="calendar-day locked" style="background: #e9ecef;">휴</div>
+                                <div class="calendar-day locked" style="background: #e9ecef;">휴</div>
+                            </div>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">2주차 (7/8-7/14)</div>
+                            <div class="calendar-week">
+                                <div class="calendar-day locked">8</div>
+                                <div class="calendar-day locked">9</div>
+                                <div class="calendar-day locked">10</div>
+                                <div class="calendar-day locked">11</div>
+                                <div class="calendar-day locked">12</div>
+                                <div class="calendar-day locked" style="background: #e9ecef;">휴</div>
+                                <div class="calendar-day locked" style="background: #e9ecef;">휴</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="font-size: 12px; color: #666; display: flex; align-items: center; gap: 16px;">
+                        <span><span style="color: #28a745;">●</span> 완료</span>
+                        <span><span style="color: #E33D37;">●</span> 오늘</span>
+                        <span><span style="color: #999;">●</span> 예정</span>
+                        <span><span style="color: #999;">●</span> 휴무</span>
+                    </div>
+                </div>
+
+                <!-- 오늘의 문제 -->
+                <div class="card" style="border: 2px solid #E33D37; background: linear-gradient(135deg, #fff9f9 0%, #ffffff 100%);">
+                    <div style="display: flex; justify-content: between; align-items: flex-start; margin-bottom: 20px;">
+                        <div style="flex: 1;">
+                            <div class="card-title" style="color: #E33D37; font-size: 20px;">📝 오늘의 문제</div>
+                            <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px;">두 수의 합</h2>
+                            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                                <span class="badge badge-primary">Python</span>
+                                <span class="badge badge-warning">Level 1</span>
+                                <span class="badge" style="background: #e8f4f8; color: #0969da;">프로그래머스</span>
+                            </div>
+                            <p style="color: #666; margin-bottom: 20px;">
+                                정수 배열에서 서로 다른 인덱스의 두 수를 더한 모든 경우의 결과를 배열로 반환하는 문제입니다.
+                            </p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 12px; color: #666; margin-bottom: 8px;">제출률</div>
+                            <div style="font-size: 24px; font-weight: 700; color: #E33D37;">45%</div>
+                            <div style="font-size: 12px; color: #666;">35/78명</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-primary" onclick="startSolving()" style="flex: 1;">📝 문제 풀이 공간 입장</button>
+                    </div>
+                </div>
+
+                <!-- 개인 현황 & 랭킹 -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="card">
+                        <div class="card-title">📈 나의 진행 현황</div>
+                        <div style="margin-bottom: 16px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>문제 풀이 진행률</span>
+                                <span style="font-weight: 600; color: #E33D37;">2/3일 (67%)</span>
+                            </div>
+                            <div style="width: 100%; height: 8px; background: #f8f9fa; border-radius: 4px;">
+                                <div style="width: 67%; height: 100%; background: #E33D37; border-radius: 4px;"></div>
+                            </div>
+                        </div>
+                        <div style="font-size: 14px; color: #666;">
+                            연속 제출: <strong>2일</strong> | 이번 주 목표: <strong>5문제 완료</strong>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">🏆 이번 주 랭킹</div>
+                        <div style="font-size: 14px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>🥇 김철수</span><span>5문제</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>🥈 이영희</span><span>4문제</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>🥉 박민수</span><span>3문제</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; color: #E33D37; font-weight: 600;">
+                                <span>📍 홍길동 (나)</span><span>2문제</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 내 제출 기록 페이지 -->
+        <div id="my-submissions" class="main-content">
+            <div class="container" style="padding: 40px 20px;">
+                <div style="margin-bottom: 30px;">
+                    <h1 style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">내 제출 기록</h1>
+                    <p style="color: #666;">지금까지 제출한 문제들과 소요시간을 확인할 수 있습니다.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">문제 제출</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">80%</div>
+                        <div class="stat-label">완주율</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8분 42초</div>
+                        <div class="stat-label">평균 시간</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3일</div>
+                        <div class="stat-label">연속 제출</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">📊 제출 기록</div>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid #e9ecef;">
+                                    <th style="padding: 12px; text-align: left;">날짜</th>
+                                    <th style="padding: 12px; text-align: left;">문제명</th>
+                                    <th style="padding: 12px; text-align: left;">소요시간</th>
+                                    <th style="padding: 12px; text-align: left;">평가</th>
+                                    <th style="padding: 12px; text-align: left;">상태</th>
+                                    <th style="padding: 12px; text-align: left;">액션</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid #e9ecef;">
+                                    <td style="padding: 12px;">07.03</td>
+                                    <td style="padding: 12px;">두 수의 합</td>
+                                    <td style="padding: 12px;"><strong style="color: #E33D37;">5분 42초</strong></td>
+                                    <td style="padding: 12px;">😊 할만했어요</td>
+                                    <td style="padding: 12px;"><span class="badge badge-success">완료</span></td>
+                                    <td style="padding: 12px;">
+                                        <button class="btn btn-secondary" style="padding: 6px 12px; margin-right: 8px;" onclick="showCodeModal()">코드 보기</button>
+                                        <button class="btn btn-secondary" style="padding: 6px 12px;" onclick="showSolutionModal()">해설 보기</button>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #e9ecef;">
+                                    <td style="padding: 12px;">07.02</td>
+                                    <td style="padding: 12px;">완주하지 못한 선수</td>
+                                    <td style="padding: 12px;"><strong style="color: #E33D37;">12분 18초</strong></td>
+                                    <td style="padding: 12px;">😅 어려웠어요</td>
+                                    <td style="padding: 12px;"><span class="badge badge-success">완료</span></td>
+                                    <td style="padding: 12px;">
+                                        <button class="btn btn-secondary" style="padding: 6px 12px; margin-right: 8px;">코드 보기</button>
+                                        <button class="btn btn-secondary" style="padding: 6px 12px;" onclick="showSolutionModal()">해설 보기</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px;">07.01</td>
+                                    <td style="padding: 12px;">K번째수</td>
+                                    <td style="padding: 12px;">-</td>
+                                    <td style="padding: 12px;">-</td>
+                                    <td style="padding: 12px;"><span class="badge badge-warning">미제출</span></td>
+                                    <td style="padding: 12px;">
+                                        <button class="btn btn-primary" style="padding: 6px 12px;">제출하기</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIL 제출 페이지 -->
+        <div id="til-submit" class="main-content">
+            <div class="container" style="padding: 40px 20px;">
+                <div style="margin-bottom: 30px;">
+                    <h1 style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">TIL 제출</h1>
+                    <p style="color: #666;">매일 TIL(Today I Learned)을 작성하고 제출해주세요.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
+                    <div class="card">
+                        <div class="card-title">📝 오늘의 TIL 제출 (7월 3일)</div>
+                        <form>
+                            <div class="form-group">
+                                <label class="form-label">TIL 블로그 링크</label>
+                                <input type="url" class="form-input" placeholder="https://blog.example.com/til-0703">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">오늘 학습한 내용 (선택)</label>
+                                <textarea class="form-input" style="height: 80px; resize: vertical;" placeholder="오늘 학습한 주요 내용을 간단히 요약해주세요."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">어려웠던 점 (선택)</label>
+                                <textarea class="form-input" style="height: 60px; resize: vertical;" placeholder="오늘 어려웠던 점이나 막혔던 부분을 공유해주세요."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">오늘 TIL 제출하기</button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <div class="card">
+                            <div class="card-title">📅 제출 현황</div>
+                            <div style="margin-bottom: 20px;">
+                                <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">1주차 (7/1-7/5)</div>
+                                <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+                                    <div style="width: 20px; height: 20px; background: #d4edda; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600;">1</div>
+                                    <div style="width: 20px; height: 20px; background: #d4edda; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600;">2</div>
+                                    <div style="width: 20px; height: 20px; background: #E33D37; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: white;">3</div>
+                                    <div style="width: 20px; height: 20px; background: #f8f9fa; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #999;">4</div>
+                                    <div style="width: 20px; height: 20px; background: #f8f9fa; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #999;">5</div>
+                                </div>
+                                <div style="font-size: 12px; color: #666;">제출: 2/5일 | <span class="badge badge-warning">리워드 부족</span></div>
+                            </div>
+                            
+                            <div style="text-align: center; padding-top: 16px; border-top: 1px solid #e9ecef;">
+                                <div style="font-size: 20px; font-weight: 700; color: #E33D37;">2/10</div>
+                                <div style="font-size: 12px; color: #666;">완료된 TIL</div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">💡 작성 팁</div>
+                            <div style="font-size: 14px; color: #666; line-height: 1.6;">
+                                • 오늘 학습한 내용 요약<br>
+                                • 새로 알게 된 개념 정리<br>
+                                • 어려웠던 점과 해결과정<br>
+                                • 내일 학습 계획<br>
+                                • 코드 예시 포함 권장
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 마이페이지 -->
+        <div id="mypage" class="main-content">
+            <div class="container" style="padding: 40px 20px;">
+                <div style="margin-bottom: 30px;">
+                    <h1 style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">마이페이지</h1>
+                    <p style="color: #666;">나의 챌린지 진행 상황을 확인해보세요.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
+                    <div>
+                        <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr);">
+                            <div class="stat-card">
+                                <div class="stat-number">8</div>
+                                <div class="stat-label">문제 제출</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">80%</div>
+                                <div class="stat-label">완주율</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">TIL 제출</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">3일</div>
+                                <div class="stat-label">연속 제출</div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">📊 2주 챌린지 진행률</div>
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>문제 풀이 진행률</span>
+                                    <span style="font-weight: 600; color: #E33D37;">8/10 (80%)</span>
+                                </div>
+                                <div style="width: 100%; height: 10px; background: #f8f9fa; border-radius: 5px;">
+                                    <div style="width: 80%; height: 100%; background: #E33D37; border-radius: 5px;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>TIL 제출 진행률</span>
+                                    <span style="font-weight: 600; color: #28a745;">2/10 (20%)</span>
+                                </div>
+                                <div style="width: 100%; height: 10px; background: #f8f9fa; border-radius: 5px;">
+                                    <div style="width: 20%; height: 100%; background: #28a745; border-radius: 5px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="card">
+                            <div class="card-title">👤 프로필</div>
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <div style="width: 80px; height: 80px; background: #E33D37; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: 600;">홍</div>
+                                <div style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">홍길동</div>
+                                <div style="font-size: 14px; color: #666;">hong@example.com</div>
+                            </div>
+                            
+                            <div style="border-top: 1px solid #e9ecef; padding-top: 16px; font-size: 14px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>선택 언어</span>
+                                    <span style="color: #E33D37; font-weight: 500;">Python</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span>선택 레벨</span>
+                                    <span style="color: #E33D37; font-weight: 500;">Level 1</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span>참여 일수</span>
+                                    <span>3일</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-title">🎁 달성 가능한 리워드</div>
+                            <div style="margin-bottom: 16px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <span style="font-size: 14px;">문제 풀이 완주</span>
+                                    <span class="badge badge-success">달성 임박</span>
+                                </div>
+                                <div style="font-size: 12px; color: #666;">내일배움캠프 할인쿠폰</div>
+                            </div>
+                            
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <span style="font-size: 14px;">TIL 완주</span>
+                                    <span class="badge badge-warning">진행중</span>
+                                </div>
+                                <div style="font-size: 12px; color: #666;">스타벅스 아메리카노</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 문제 풀이 모달 -->
+    <div id="solving-modal" class="modal">
+        <div class="modal-content" style="max-width: 1000px; width: 95%;">
+            <div class="timer-display">
+                <div>
+                    <div style="font-size: 16px; font-weight: 600;">📝 두 수의 합 - 풀이 중</div>
+                    <div style="font-size: 12px; opacity: 0.9;">출처: 프로그래머스 | Python Level 1</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="timer-time" id="timer">05:42</div>
+                    <div style="font-size: 12px; opacity: 0.9;">소요시간</div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <button class="btn btn-outline" onclick="openOriginalProblem()">🔗 원본 문제 보기</button>
+                <button class="btn btn-secondary" style="margin-left: 8px;">💾 임시저장됨</button>
+            </div>
+
+            <div class="ide-container">
+                <div class="ide-header">
+                    <div class="ide-tab">solution.py</div>
+                    <div style="margin-left: auto; color: #666; font-size: 12px;">Python | 자동저장: 방금전</div>
+                </div>
+                <div contenteditable="true" class="code-editor" id="code-editor">
+<span class="code-keyword">def</span> <span class="code-function">solution</span>(<span class="code-variable">numbers</span>):
+    <span class="code-comment"># 서로 다른 인덱스의 두 수를 더한 결과</span>
+    <span class="code-variable">answer</span> <span class="code-operator">=</span> []
+    
+    <span class="code-keyword">for</span> <span class="code-variable">i</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-builtin">len</span>(<span class="code-variable">numbers</span>)):
+        <span class="code-keyword">for</span> <span class="code-variable">j</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-variable">i</span><span class="code-operator">+</span><span class="code-number">1</span>, <span class="code-builtin">len</span>(<span class="code-variable">numbers</span>)):
+            <span class="code-variable">sum_val</span> <span class="code-operator">=</span> <span class="code-variable">numbers</span>[<span class="code-variable">i</span>] <span class="code-operator">+</span> <span class="code-variable">numbers</span>[<span class="code-variable">j</span>]
+            <span class="code-keyword">if</span> <span class="code-variable">sum_val</span> <span class="code-keyword">not</span> <span class="code-keyword">in</span> <span class="code-variable">answer</span>:
+                <span class="code-variable">answer</span>.<span class="code-function">append</span>(<span class="code-variable">sum_val</span>)
+    
+    <span class="code-keyword">return</span> <span class="code-builtin">sorted</span>(<span class="code-variable">answer</span>)
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 16px; background: #f8f9fa; border-radius: 8px;">
+                <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                    <button class="btn btn-secondary" style="flex: 1;">💾 임시 저장</button>
+                    <button class="btn btn-secondary" style="flex: 1;">🔄 코드 초기화</button>
+                    <button class="btn btn-primary" style="flex: 2;" onclick="showSubmitModal()">🚀 풀이 완료 및 제출</button>
+                </div>
+                <div style="text-align: center; font-size: 12px; color: #666;">
+                    💡 30초마다 자동 저장됩니다 | 제출 마감: 오늘 23:59
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="closeSolvingModal()">✕ 나가기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 제출 모달 -->
+    <div id="submit-modal" class="modal">
+        <div class="modal-content">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="font-size: 20px; font-weight: 600; margin-bottom: 8px;">🎉 풀이 완료!</div>
+                <div style="font-size: 14px; color: #666;">제출하기 전에 확인해주세요</div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+                <div style="font-size: 14px; margin-bottom: 8px;"><strong>📊 풀이 정보</strong></div>
+                <div style="font-size: 13px; line-height: 1.5;">
+                    소요시간: <strong style="color: #E33D37;">05분 42초</strong><br>
+                    코드 라인: <strong>11줄</strong><br>
+                    최종 수정: <strong>방금전</strong>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">이 문제는 어떠셨나요?</div>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="selectDifficulty('hard')">😅 어려웠어요</button>
+                    <button class="btn btn-primary" style="flex: 1;" onclick="selectDifficulty('easy')">😊 할만했어요</button>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">소감 (선택)</div>
+                <textarea style="width: 100%; height: 80px; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px; resize: none;" placeholder="문제 풀이 소감을 간단히 남겨주세요..."></textarea>
+            </div>
+            
+            <div style="display: flex; gap: 12px;">
+                <button class="btn btn-secondary" style="flex: 1;" onclick="closeSubmitModal()">취소</button>
+                <button class="btn btn-primary" style="flex: 2;" onclick="submitSolution()">✅ 최종 제출</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 문제 풀이 시작 확인 모달 -->
+    <div id="start-confirm-modal" class="modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div style="text-align: center; margin-bottom: 24px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">⏰</div>
+                <div style="font-size: 20px; font-weight: 600; margin-bottom: 8px; color: #E33D37;">문제 풀이 시작 안내</div>
+                <div style="font-size: 14px; color: #666;">문제 풀이 공간에 입장하시겠습니까?</div>
+            </div>
+            
+            <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #856404;">📋 안내사항</div>
+                <div style="font-size: 13px; color: #856404; line-height: 1.5;">
+                    • <strong>타이머가 바로 시작</strong>됩니다<br>
+                    • 원본 문제는 풀이 공간에서 확인 가능<br>
+                    • 코드는 30초마다 자동 저장됩니다<br>
+                    • 제출 마감: 오늘 23:59<br>
+                    • 나가기 시 진행상황이 임시 저장됩니다
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">📝 오늘의 문제</div>
+                <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; font-size: 13px;">
+                    <strong>두 수의 합</strong> (Python Level 1)<br>
+                    <span style="color: #666;">정수 배열에서 서로 다른 인덱스의 두 수를 더한 결과 반환</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 12px;">
+                <button class="btn btn-secondary" style="flex: 1;" onclick="closeStartConfirmModal()">취소</button>
+                <button class="btn btn-primary" style="flex: 2;" onclick="confirmStartSolving()">🚀 풀이 시작하기</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 16px; font-size: 12px; color: #999;">
+                💡 팁: 문제는 풀이 공간에서 확인하실 수 있습니다
+            </div>
+        </div>
+    </div>
+
+    <!-- 시니어 해설 모달 -->
+    <div id="solution-modal" class="modal">
+        <div class="modal-content" style="max-width: 900px; width: 95%;">
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div>
+                        <div style="font-size: 20px; font-weight: 600; color: #E33D37;">🎓 시니어 해설 - 두 수의 합</div>
+                        <div style="font-size: 14px; color: #666;">작성자: 김시니어 멘토 | Python Level 1</div>
+                    </div>
+                    <span class="badge badge-success">제출 완료자만 열람 가능</span>
+                </div>
+            </div>
+            
+            <!-- 해설 내용 -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-title">💡 문제 해석 및 접근 방법</div>
+                <div style="font-size: 14px; line-height: 1.6; color: #555;">
+                    <p style="margin-bottom: 12px;">
+                        이 문제는 <strong>조합(Combination)</strong> 개념을 활용하는 문제입니다. 
+                        배열에서 서로 다른 두 인덱스의 값을 더해서 나올 수 있는 모든 경우의 수를 구해야 합니다.
+                    </p>
+                    <p style="margin-bottom: 12px;">
+                        <strong>핵심 포인트:</strong>
+                    </p>
+                    <ul style="margin-left: 20px; margin-bottom: 12px;">
+                        <li>중복 제거: 같은 합은 한 번만 포함</li>
+                        <li>이중 반복문으로 모든 조합 확인</li>
+                        <li>결과 배열을 오름차순 정렬</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 시니어 해설 코드 -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-title">🔧 시니어 해설 코드</div>
+                <div class="ide-container">
+                    <div class="ide-header">
+                        <div class="ide-tab">senior_solution.py</div>
+                        <div style="margin-left: auto; color: #666; font-size: 12px;">Python | 최적화된 해법</div>
+                    </div>
+                    <div class="code-editor" style="min-height: 250px;">
+<span class="code-keyword">def</span> <span class="code-function">solution</span>(<span class="code-variable">numbers</span>):
+    <span class="code-comment"># 방법 1: 기본 접근법 (여러분이 푼 방식)</span>
+    <span class="code-variable">result</span> <span class="code-operator">=</span> <span class="code-builtin">set</span>()  <span class="code-comment"># set을 사용하면 중복 자동 제거</span>
+    
+    <span class="code-keyword">for</span> <span class="code-variable">i</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-builtin">len</span>(<span class="code-variable">numbers</span>)):
+        <span class="code-keyword">for</span> <span class="code-variable">j</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-variable">i</span> <span class="code-operator">+</span> <span class="code-number">1</span>, <span class="code-builtin">len</span>(<span class="code-variable">numbers</span>)):
+            <span class="code-variable">result</span>.<span class="code-function">add</span>(<span class="code-variable">numbers</span>[<span class="code-variable">i</span>] <span class="code-operator">+</span> <span class="code-variable">numbers</span>[<span class="code-variable">j</span>])
+    
+    <span class="code-keyword">return</span> <span class="code-builtin">sorted</span>(<span class="code-builtin">list</span>(<span class="code-variable">result</span>))
+
+<span class="code-comment"># 방법 2: 더 간결한 방식 (itertools 활용)</span>
+<span class="code-keyword">from</span> <span class="code-variable">itertools</span> <span class="code-keyword">import</span> <span class="code-function">combinations</span>
+
+<span class="code-keyword">def</span> <span class="code-function">solution_advanced</span>(<span class="code-variable">numbers</span>):
+    <span class="code-keyword">return</span> <span class="code-builtin">sorted</span>(<span class="code-builtin">list</span>(<span class="code-builtin">set</span>(<span class="code-variable">a</span> <span class="code-operator">+</span> <span class="code-variable">b</span> <span class="code-keyword">for</span> <span class="code-variable">a</span>, <span class="code-variable">b</span> <span class="code-keyword">in</span> <span class="code-function">combinations</span>(<span class="code-variable">numbers</span>, <span class="code-number">2</span>))))
+                    </div>
+                </div>
+            </div>
+
+            <!-- 성능 비교 -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-title">⚡ 성능 분석 및 최적화 팁</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div>
+                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #E33D37;">시간 복잡도</div>
+                        <div style="font-size: 13px; line-height: 1.5;">
+                            • 이중 반복문: <code style="background: #f8f9fa; padding: 2px 6px; border-radius: 4px;">O(n²)</code><br>
+                            • 정렬: <code style="background: #f8f9fa; padding: 2px 6px; border-radius: 4px;">O(k log k)</code><br>
+                            • 전체: <code style="background: #f8f9fa; padding: 2px 6px; border-radius: 4px;">O(n² + k log k)</code>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #28a745;">최적화 포인트</div>
+                        <div style="font-size: 13px; line-height: 1.5;">
+                            • <strong>set 사용</strong>: 중복 제거가 더 효율적<br>
+                            • <strong>combinations</strong>: 코드가 더 간결<br>
+                            • <strong>리스트 컴프리헨션</strong>: 성능 향상
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 학습 포인트 -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-title">📚 이 문제에서 배울 수 있는 것들</div>
+                <div style="font-size: 14px; line-height: 1.6;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+                        <div>
+                            <div style="font-weight: 600; color: #E33D37; margin-bottom: 4px;">🔄 반복문</div>
+                            <div style="font-size: 13px; color: #666;">이중 반복문으로 모든 조합 탐색</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #E33D37; margin-bottom: 4px;">🗂️ 자료구조</div>
+                            <div style="font-size: 13px; color: #666;">set과 list의 적절한 활용</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #E33D37; margin-bottom: 4px;">⚡ 최적화</div>
+                            <div style="font-size: 13px; color: #666;">코드 간결성과 성능 개선</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: #E33D37; margin-bottom: 4px;">🧮 수학</div>
+                            <div style="font-size: 13px; color: #666;">조합론의 실전 적용</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 관련 문제 추천 -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-title">🎯 관련 문제 추천</div>
+                <div style="font-size: 14px;">
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <div style="background: #f8f9fa; padding: 8px 12px; border-radius: 6px; font-size: 13px;">
+                            <strong>세 수의 합</strong> - Level 2
+                        </div>
+                        <div style="background: #f8f9fa; padding: 8px 12px; border-radius: 6px; font-size: 13px;">
+                            <strong>폰켓몬</strong> - Level 1
+                        </div>
+                        <div style="background: #f8f9fa; padding: 8px 12px; border-radius: 6px; font-size: 13px;">
+                            <strong>완주하지 못한 선수</strong> - Level 1
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 닫기 버튼 -->
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button class="btn btn-secondary" onclick="closeSolutionModal()">✕ 닫기</button>
+                <button class="btn btn-outline" onclick="copyToClipboard()" style="flex: 1;">📋 해설 코드 복사</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 코드 보기 모달 -->
+    <div id="code-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div style="margin-bottom: 20px;">
+                <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">📄 제출 코드 - 두 수의 합</div>
+                <div style="font-size: 14px; color: #666;">
+                    제출 일시: 2025년 7월 3일 14:30 | 소요시간: <strong style="color: #E33D37;">5분 42초</strong> | 평가: 😊 할만했어요
+                </div>
+            </div>
+            
+            <div class="ide-container">
+                <div class="ide-header">
+                    <div class="ide-tab">solution.py</div>
+                    <div style="margin-left: auto; color: #666; font-size: 12px;">Python</div>
+                </div>
+                <div class="code-editor" style="min-height: 200px;">
+<span class="code-keyword">def</span> <span class="code-function">solution</span>(<span class="code-variable">numbers</span>):
+    <span class="code-variable">answer</span> <span class="code-operator">=</span> []
+    
+    <span class="code-keyword">for</span> <span class="code-variable">i</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-builtin">len</span>(<span class="code-variable">numbers</span>)):
+        <span class="code-keyword">for</span> <span class="code-variable">j</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-variable">i</span><span class="code-operator">+</span><span class="code-number">1</span>, <span class="code-builtin">len</span>(<span class="code-variable">numbers</span>)):
+            <span class="code-variable">sum_val</span> <span class="code-operator">=</span> <span class="code-variable">numbers</span>[<span class="code-variable">i</span>] <span class="code-operator">+</span> <span class="code-variable">numbers</span>[<span class="code-variable">j</span>]
+            <span class="code-keyword">if</span> <span class="code-variable">sum_val</span> <span class="code-keyword">not</span> <span class="code-keyword">in</span> <span class="code-variable">answer</span>:
+                <span class="code-variable">answer</span>.<span class="code-function">append</span>(<span class="code-variable">sum_val</span>)
+    
+    <span class="code-keyword">return</span> <span class="code-builtin">sorted</span>(<span class="code-variable">answer</span>)
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; display: flex; gap: 12px;">
+                <button class="btn btn-secondary" style="flex: 1;">📋 코드 복사</button>
+                <button class="btn btn-secondary" style="flex: 1;">🔄 다시 풀기</button>
+                <button class="btn btn-secondary" onclick="closeCodeModal()">✕ 닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 전역 변수
+        let currentUser = null;
+        let timerInterval = null;
+        let startTime = null;
+        let selectedDifficulty = null;
+
+        // 알림 표시 함수
+        function showAlert(type, message) {
+            // 기존 알림 제거
+            const existingAlerts = document.querySelectorAll('.alert');
+            existingAlerts.forEach(alert => alert.remove());
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} fade-in`;
+            alertDiv.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span>${getAlertIcon(type)}</span>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            // 알림 위치 설정
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '20px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '9999';
+            alertDiv.style.minWidth = '300px';
+            alertDiv.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            
+            document.body.appendChild(alertDiv);
+            
+            // 자동 제거
+            setTimeout(() => {
+                alertDiv.style.opacity = '0';
+                alertDiv.style.transform = 'translateX(100%)';
+                setTimeout(() => alertDiv.remove(), 300);
+            }, 3000);
+        }
+
+        function getAlertIcon(type) {
+            const icons = {
+                success: '✅',
+                error: '❌',
+                info: 'ℹ️',
+                warning: '⚠️'
+            };
+            return icons[type] || 'ℹ️';
+        }
+
+        // 로그인 처리
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    
+                    // 테스트 계정 확인
+                    if (email === 'test@example.com' && phone === '010-1234-5678') {
+                        currentUser = {
+                            name: '홍길동',
+                            email: email,
+                            language: 'Python',
+                            level: 'Level 1'
+                        };
+                        
+                        showAlert('success', '로그인 성공! 작심큰일 챌린지에 오신 것을 환영합니다.');
+                        
+                        setTimeout(() => {
+                            document.getElementById('login-page').classList.remove('active');
+                            document.getElementById('main-app').classList.add('active');
+                            updateUserInfo();
+                        }, 1500);
+                    } else {
+                        showAlert('error', '등록되지 않은 정보입니다. 테스트 계정을 사용해주세요.');
+                    }
+                });
+            }
+            
+            // 테스트 데이터 자동 입력
+            setTimeout(() => {
+                fillTestData();
+                
+                // 로그인 폼에 안내 추가
+                const testInfo = document.createElement('div');
+                testInfo.innerHTML = `
+                    <div style="background: #e3f2fd; border: 1px solid #2196f3; border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 12px;">
+                        <strong>🚀 빠른 테스트를 위해 계정 정보가 자동 입력됩니다.</strong><br>
+                        바로 "로그인" 버튼을 클릭하세요!
+                    </div>
+                `;
+                
+                const form = document.getElementById('login-form');
+                if (form && form.parentNode) {
+                    form.parentNode.insertBefore(testInfo, form);
+                }
+            }, 1000);
+        });
+
+        // 테스트 데이터 자동 입력
+        function fillTestData() {
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            
+            if (emailInput && phoneInput) {
+                emailInput.value = 'test@example.com';
+                phoneInput.value = '010-1234-5678';
+            }
+        }
+
+        // 사용자 정보 업데이트
+        function updateUserInfo() {
+            if (currentUser) {
+                const userNameElement = document.getElementById('user-name');
+                if (userNameElement) {
+                    userNameElement.textContent = 
+                        `${currentUser.name}님 (${currentUser.language} ${currentUser.level})`;
+                }
+            }
+        }
+
+        // 페이지 네비게이션 - 수정된 부분
+        function showMainPage(pageId) {
+            // 모든 메인 콘텐츠 페이지 숨기기
+            const pages = document.querySelectorAll('.main-content');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // 모든 네비게이션 비활성화
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            
+            // 선택된 페이지 보이기
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // 선택된 네비게이션 활성화
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+        }
+
+        // 로그아웃
+        function logout() {
+            if (confirm('정말 로그아웃하시겠습니까?')) {
+                currentUser = null;
+                document.getElementById('main-app').classList.remove('active');
+                document.getElementById('login-page').classList.add('active');
+                
+                // 폼 초기화
+                document.getElementById('login-form').reset();
+            }
+        }
+
+        // 원본 문제 보기
+        function openOriginalProblem() {
+            window.open('https://programmers.co.kr/learn/courses/30/lessons/68644', '_blank');
+            showAlert('info', '원본 문제가 새 창에서 열립니다.');
+        }
+
+        // 문제 풀이 시작 - 확인 모달 표시
+        function startSolving() {
+            document.getElementById('start-confirm-modal').classList.add('active');
+        }
+
+        // 문제 풀이 시작 확인 모달 닫기
+        function closeStartConfirmModal() {
+            document.getElementById('start-confirm-modal').classList.remove('active');
+        }
+
+        // 문제 풀이 확정 시작
+        function confirmStartSolving() {
+            // 확인 모달 닫기
+            document.getElementById('start-confirm-modal').classList.remove('active');
+            
+            // 타이머 시작 알림
+            showAlert('info', '타이머가 시작되었습니다! 화이팅! 💪');
+            
+            // 풀이 모달 열기
+            setTimeout(() => {
+                document.getElementById('solving-modal').classList.add('active');
+                startTimer();
+            }, 800);
+        }
+
+        // 타이머 시작
+        function startTimer() {
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        // 타이머 업데이트
+        function updateTimer() {
+            if (startTime) {
+                const now = new Date();
+                const elapsed = Math.floor((now - startTime) / 1000);
+                
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                
+                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                const timerElement = document.getElementById('timer');
+                if (timerElement) {
+                    timerElement.textContent = timeString;
+                }
+            }
+        }
+
+        // 타이머 정지
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        // 풀이 모달 닫기
+        function closeSolvingModal() {
+            if (confirm('풀이를 중단하시겠습니까? 작성 중인 코드는 임시 저장됩니다.')) {
+                document.getElementById('solving-modal').classList.remove('active');
+                stopTimer();
+            }
+        }
+
+        // 제출 모달 표시
+        function showSubmitModal() {
+            document.getElementById('submit-modal').classList.add('active');
+            stopTimer();
+        }
+
+        // 제출 모달 닫기
+        function closeSubmitModal() {
+            document.getElementById('submit-modal').classList.remove('active');
+            startTimer(); // 타이머 재시작
+        }
+
+        // 난이도 선택
+        function selectDifficulty(difficulty) {
+            selectedDifficulty = difficulty;
+            
+            // 버튼 스타일 업데이트
+            const modal = document.getElementById('submit-modal');
+            const buttons = modal.querySelectorAll('.btn');
+            const difficultyButtons = Array.from(buttons).slice(-4, -2); // 난이도 선택 버튼들
+            
+            difficultyButtons.forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-secondary');
+            });
+            
+            if (difficulty === 'easy') {
+                difficultyButtons[1].classList.remove('btn-secondary');
+                difficultyButtons[1].classList.add('btn-primary');
+            } else {
+                difficultyButtons[0].classList.remove('btn-secondary');
+                difficultyButtons[0].classList.add('btn-primary');
+            }
+        }
+
+        // 솔루션 제출
+        function submitSolution() {
+            if (!selectedDifficulty) {
+                alert('난이도 평가를 선택해주세요.');
+                return;
+            }
+            
+            // 모든 모달 닫기
+            document.getElementById('submit-modal').classList.remove('active');
+            document.getElementById('solving-modal').classList.remove('active');
+            
+            showAlert('success', '문제가 성공적으로 제출되었습니다! 시니어 해설이 공개되었습니다.');
+            
+            // 오늘의 문제 페이지 업데이트
+            updateTodayProblemsAfterSubmission();
+            
+            // 페이지 새로고침 효과
+            setTimeout(() => {
+                showMainPage('today-problems');
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => item.classList.remove('active'));
+                navItems[0].classList.add('active'); // 오늘의 문제 탭 활성화
+            }, 2000);
+        }
+
+        // 문제 제출 후 오늘의 문제 페이지 업데이트
+        function updateTodayProblemsAfterSubmission() {
+            // 기존 오늘의 문제 카드를 완료된 상태로 변경
+            const todayProblemCard = document.querySelector('#today-problems .card[style*="border: 2px solid #E33D37"]');
+            if (todayProblemCard) {
+                todayProblemCard.innerHTML = `
+                    <div style="display: flex; justify-content: between; align-items: flex-start; margin-bottom: 20px;">
+                        <div style="flex: 1;">
+                            <div class="card-title" style="color: #28a745; font-size: 20px;">✅ 완료된 문제</div>
+                            <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 12px;">두 수의 합</h2>
+                            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                                <span class="badge badge-primary">Python</span>
+                                <span class="badge badge-warning">Level 1</span>
+                                <span class="badge" style="background: #e8f4f8; color: #0969da;">프로그래머스</span>
+                                <span class="badge badge-success">제출 완료</span>
+                            </div>
+                            <p style="color: #666; margin-bottom: 20px;">
+                                정수 배열에서 서로 다른 인덱스의 두 수를 더한 모든 경우의 결과를 배열로 반환하는 문제입니다.
+                            </p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 12px; color: #666; margin-bottom: 8px;">제출률</div>
+                            <div style="font-size: 24px; font-weight: 700; color: #28a745;">46%</div>
+                            <div style="font-size: 12px; color: #666;">36/78명</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+                        <button class="btn btn-outline" onclick="showCodeModal()">📄 내 코드 보기</button>
+                        <button class="btn btn-secondary" onclick="showSolutionModal()">🎓 시니어 해설</button>
+                        <button class="btn btn-primary" onclick="toggleProblemLike()" id="like-btn" style="flex: 1;">
+                            <span id="like-icon">🤍</span> 이 문제가 좋아요 <span id="like-count">(23)</span>
+                        </button>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 16px; border-radius: 8px;">
+                        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #666;">📊 나의 풀이 결과</div>
+                        <div style="font-size: 13px; line-height: 1.5; color: #555;">
+                            소요시간: <strong style="color: #E33D37;">5분 42초</strong> | 
+                            평가: <strong>😊 할만했어요</strong> | 
+                            제출시간: <strong>방금전</strong>
+                        </div>
+                    </div>
+                `;
+                todayProblemCard.style.border = '2px solid #28a745';
+                todayProblemCard.style.background = 'linear-gradient(135deg, #f0fff4 0%, #ffffff 100%)';
+                
+                // 다른 참가자들의 코드 섹션 추가
+                const container = todayProblemCard.parentNode;
+                const participantsSection = document.createElement('div');
+                participantsSection.innerHTML = `
+                    <!-- 참가자들의 코드 섹션 -->
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <div class="card-title">👥 다른 참가자들의 풀이 (제출 완료자만 열람 가능)</div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;" onclick="sortByTime()">⏱️ 시간순</button>
+                                <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;" onclick="sortByLikes()">❤️ 좋아요순</button>
+                                <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;" onclick="sortByRecent()">🕒 최신순</button>
+                            </div>
+                        </div>
+                        
+                        <div id="participants-code-list">
+                            <!-- 참가자 1 -->
+                            <div class="card" style="margin-bottom: 16px; border: 1px solid #e9ecef;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 36px; height: 36px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">김</div>
+                                        <div>
+                                            <div style="font-weight: 600; font-size: 14px;">김철수</div>
+                                            <div style="font-size: 12px; color: #666;">2분 34초 | 😊 할만했어요</div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <button class="btn btn-outline" style="padding: 4px 8px; font-size: 12px;" onclick="toggleUserCodeLike('user1')">
+                                            <span id="user1-like-icon">❤️</span> <span id="user1-like-count">12</span>
+                                        </button>
+                                        <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="toggleUserCode('user1')">코드 보기</button>
+                                    </div>
+                                </div>
+                                
+                                <div id="user1-code" style="display: none;">
+                                    <div class="ide-container" style="margin: 0;">
+                                        <div class="ide-header">
+                                            <div class="ide-tab">solution.py</div>
+                                            <div style="margin-left: auto; color: #666; font-size: 12px;">Python | 2분 34초</div>
+                                        </div>
+                                        <div class="code-editor" style="min-height: 180px; font-size: 13px;">
+<span class="code-keyword">def</span> <span class="code-function">solution</span>(<span class="code-variable">numbers</span>):
+    <span class="code-comment"># set을 활용한 깔끔한 풀이</span>
+    <span class="code-variable">result</span> <span class="code-operator">=</span> <span class="code-builtin">set</span>()
+    <span class="code-keyword">for</span> <span class="code-variable">i</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-builtin">len</span>(<span class="code-variable">numbers</span>)):
+        <span class="code-keyword">for</span> <span class="code-variable">j</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-variable">i</span><span class="code-operator">+</span><span class="code-number">1</span>, <span class="code-builtin">len</span>(<span class="code-variable">numbers</span>)):
+            <span class="code-variable">result</span>.<span class="code-function">add</span>(<span class="code-variable">numbers</span>[<span class="code-variable">i</span>] <span class="code-operator">+</span> <span class="code-variable">numbers</span>[<span class="code-variable">j</span>])
+    <span class="code-keyword">return</span> <span class="code-builtin">sorted</span>(<span class="code-variable">result</span>)
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 8px; font-size: 12px; color: #666;">
+                                        💬 "set을 쓰니까 중복 제거가 자동으로 되네요!"
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 참가자 2 -->
+                            <div class="card" style="margin-bottom: 16px; border: 1px solid #e9ecef;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 36px; height: 36px; background: #2196F3; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">이</div>
+                                        <div>
+                                            <div style="font-weight: 600; font-size: 14px;">이영희</div>
+                                            <div style="font-size: 12px; color: #666;">4분 12초 | 😊 할만했어요</div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <button class="btn btn-outline" style="padding: 4px 8px; font-size: 12px;" onclick="toggleUserCodeLike('user2')">
+                                            <span id="user2-like-icon">🤍</span> <span id="user2-like-count">8</span>
+                                        </button>
+                                        <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="toggleUserCode('user2')">코드 보기</button>
+                                    </div>
+                                </div>
+                                
+                                <div id="user2-code" style="display: none;">
+                                    <div class="ide-container" style="margin: 0;">
+                                        <div class="ide-header">
+                                            <div class="ide-tab">solution.py</div>
+                                            <div style="margin-left: auto; color: #666; font-size: 12px;">Python | 4분 12초</div>
+                                        </div>
+                                        <div class="code-editor" style="min-height: 200px; font-size: 13px;">
+<span class="code-keyword">def</span> <span class="code-function">solution</span>(<span class="code-variable">numbers</span>):
+    <span class="code-comment"># itertools 활용한 고급 풀이</span>
+    <span class="code-keyword">from</span> <span class="code-variable">itertools</span> <span class="code-keyword">import</span> <span class="code-function">combinations</span>
+    
+    <span class="code-variable">sums</span> <span class="code-operator">=</span> [<span class="code-variable">a</span> <span class="code-operator">+</span> <span class="code-variable">b</span> <span class="code-keyword">for</span> <span class="code-variable">a</span>, <span class="code-variable">b</span> <span class="code-keyword">in</span> <span class="code-function">combinations</span>(<span class="code-variable">numbers</span>, <span class="code-number">2</span>)]
+    <span class="code-keyword">return</span> <span class="code-builtin">sorted</span>(<span class="code-builtin">list</span>(<span class="code-builtin">set</span>(<span class="code-variable">sums</span>)))
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 8px; font-size: 12px; color: #666;">
+                                        💬 "combinations를 쓰면 더 간단하네요!"
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 참가자 3 -->
+                            <div class="card" style="margin-bottom: 16px; border: 1px solid #e9ecef;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 36px; height: 36px; background: #FF9800; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">박</div>
+                                        <div>
+                                            <div style="font-weight: 600; font-size: 14px;">박민수</div>
+                                            <div style="font-size: 12px; color: #666;">7분 28초 | 😅 어려웠어요</div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <button class="btn btn-outline" style="padding: 4px 8px; font-size: 12px;" onclick="toggleUserCodeLike('user3')">
+                                            <span id="user3-like-icon">🤍</span> <span id="user3-like-count">15</span>
+                                        </button>
+                                        <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="toggleUserCode('user3')">코드 보기</button>
+                                    </div>
+                                </div>
+                                
+                                <div id="user3-code" style="display: none;">
+                                    <div class="ide-container" style="margin: 0;">
+                                        <div class="ide-header">
+                                            <div class="ide-tab">solution.py</div>
+                                            <div style="margin-left: auto; color: #666; font-size: 12px;">Python | 7분 28초</div>
+                                        </div>
+                                        <div class="code-editor" style="min-height: 240px; font-size: 13px;">
+<span class="code-keyword">def</span> <span class="code-function">solution</span>(<span class="code-variable">numbers</span>):
+    <span class="code-comment"># 상세한 주석과 함께한 이해하기 쉬운 풀이</span>
+    <span class="code-variable">answer</span> <span class="code-operator">=</span> []
+    
+    <span class="code-comment"># 첫 번째 숫자 선택</span>
+    <span class="code-keyword">for</span> <span class="code-variable">i</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-builtin">len</span>(<span class="code-variable">numbers</span>)):
+        <span class="code-comment"># 두 번째 숫자 선택 (i보다 뒤의 인덱스)</span>
+        <span class="code-keyword">for</span> <span class="code-variable">j</span> <span class="code-keyword">in</span> <span class="code-builtin">range</span>(<span class="code-variable">i</span> <span class="code-operator">+</span> <span class="code-number">1</span>, <span class="code-builtin">len</span>(<span class="code-variable">numbers</span>)):
+            <span class="code-variable">current_sum</span> <span class="code-operator">=</span> <span class="code-variable">numbers</span>[<span class="code-variable">i</span>] <span class="code-operator">+</span> <span class="code-variable">numbers</span>[<span class="code-variable">j</span>]
+            
+            <span class="code-comment"># 중복 확인 후 추가</span>
+            <span class="code-keyword">if</span> <span class="code-variable">current_sum</span> <span class="code-keyword">not</span> <span class="code-keyword">in</span> <span class="code-variable">answer</span>:
+                <span class="code-variable">answer</span>.<span class="code-function">append</span>(<span class="code-variable">current_sum</span>)
+    
+    <span class="code-keyword">return</span> <span class="code-builtin">sorted</span>(<span class="code-variable">answer</span>)
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 8px; font-size: 12px; color: #666;">
+                                        💬 "주석을 상세히 달아서 이해하기 쉬워요! 초보자에게 도움이 될 것 같아요."
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                            <div style="font-size: 14px; color: #666;">
+                                💡 다양한 풀이 방법을 비교해보며 학습해보세요!
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // 기존 카드 다음에 참가자 섹션 추가
+                container.insertBefore(participantsSection, todayProblemCard.nextSibling);
+            }
+        }
+
+        // 코드 보기 모달
+        function showCodeModal() {
+            document.getElementById('code-modal').classList.add('active');
+        }
+
+        // 코드 보기 모달
+        function showCodeModal() {
+            document.getElementById('code-modal').classList.add('active');
+        }
+
+        // 시니어 해설 모달 표시
+        function showSolutionModal() {
+            document.getElementById('solution-modal').classList.add('active');
+            showAlert('success', '🎓 시니어 해설이 열렸습니다! 다양한 해법을 비교해보세요.');
+        }
+
+        // 시니어 해설 모달 닫기
+        function closeSolutionModal() {
+            document.getElementById('solution-modal').classList.remove('active');
+        }
+
+        // 문제 좋아요 토글
+        function toggleProblemLike() {
+            const likeBtn = document.getElementById('like-btn');
+            const likeIcon = document.getElementById('like-icon');
+            const likeCount = document.getElementById('like-count');
+            
+            if (likeIcon.textContent === '🤍') {
+                likeIcon.textContent = '❤️';
+                likeCount.textContent = '(24)';
+                likeBtn.style.background = '#ff6b6b';
+                likeBtn.style.color = 'white';
+                likeBtn.style.borderColor = '#ff6b6b';
+                showAlert('success', '❤️ 문제에 좋아요를 눌렀습니다!');
+            } else {
+                likeIcon.textContent = '🤍';
+                likeCount.textContent = '(23)';
+                likeBtn.style.background = 'transparent';
+                likeBtn.style.color = '#E33D37';
+                likeBtn.style.borderColor = '#E33D37';
+                showAlert('info', '좋아요를 취소했습니다.');
+            }
+        }
+
+        // 다른 사용자 코드 좋아요 토글
+        function toggleUserCodeLike(userId) {
+            const likeIcon = document.getElementById(`${userId}-like-icon`);
+            const likeCount = document.getElementById(`${userId}-like-count`);
+            
+            if (likeIcon.textContent === '🤍') {
+                likeIcon.textContent = '❤️';
+                const currentCount = parseInt(likeCount.textContent);
+                likeCount.textContent = currentCount + 1;
+                showAlert('success', '👍 다른 참가자의 코드에 좋아요를 눌렀습니다!');
+            } else {
+                likeIcon.textContent = '🤍';
+                const currentCount = parseInt(likeCount.textContent);
+                likeCount.textContent = currentCount - 1;
+                showAlert('info', '좋아요를 취소했습니다.');
+            }
+        }
+
+        // 다른 사용자 코드 토글
+        function toggleUserCode(userId) {
+            const codeDiv = document.getElementById(`${userId}-code`);
+            const button = event.target;
+            
+            if (codeDiv.style.display === 'none') {
+                codeDiv.style.display = 'block';
+                button.textContent = '코드 숨기기';
+                button.classList.remove('btn-secondary');
+                button.classList.add('btn-primary');
+            } else {
+                codeDiv.style.display = 'none';
+                button.textContent = '코드 보기';
+                button.classList.remove('btn-primary');
+                button.classList.add('btn-secondary');
+            }
+        }
+
+        // 정렬 기능들
+        function sortByTime() {
+            showAlert('info', '⏱️ 풀이 시간 순으로 정렬했습니다.');
+            // 실제 구현에서는 데이터를 시간순으로 재정렬
+        }
+
+        function sortByLikes() {
+            showAlert('info', '❤️ 좋아요 순으로 정렬했습니다.');
+            // 실제 구현에서는 데이터를 좋아요순으로 재정렬
+        }
+
+        function sortByRecent() {
+            showAlert('info', '🕒 최신 제출 순으로 정렬했습니다.');
+            // 실제 구현에서는 데이터를 최신순으로 재정렬
+        }
+
+        // 코드 모달 닫기
+        function closeCodeModal() {
+            document.getElementById('code-modal').classList.remove('active');
+        }
+
+        // 키보드 단축키
+        document.addEventListener('keydown', function(e) {
+            // ESC로 모달 닫기
+            if (e.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal.active');
+                modals.forEach(modal => {
+                    modal.classList.remove('active');
+                    // 풀이 모달이 닫힐 때만 타이머 정지
+                    if (modal.id === 'solving-modal') {
+                        stopTimer();
+                    }
+                });
+            }
+            
+            // Ctrl+Enter로 코드 제출
+            if (e.ctrlKey && e.key === 'Enter') {
+                if (document.getElementById('solving-modal').classList.contains('active')) {
+                    showSubmitModal();
+                }
+            }
+            
+            // Enter로 풀이 시작 (확인 모달에서)
+            if (e.key === 'Enter' && document.getElementById('start-confirm-modal').classList.contains('active')) {
+                confirmStartSolving();
+            }
+        });
+
+        // 코드 에디터 기능
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeEditor = document.getElementById('code-editor');
+            
+            // 탭 키 지원
+            if (codeEditor) {
+                codeEditor.addEventListener('keydown', function(e) {
+                    if (e.key === 'Tab') {
+                        e.preventDefault();
+                        document.execCommand('insertText', false, '    ');
+                    }
+                });
+                
+                // 자동 저장 시뮬레이션
+                setInterval(() => {
+                    if (document.getElementById('solving-modal').classList.contains('active')) {
+                        console.log('코드 자동 저장됨');
+                    }
+                }, 30000); // 30초마다
+            }
+        });
+
+        // 에러 처리
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript 에러:', e.error);
+            showAlert('error', '일시적인 오류가 발생했습니다. 새로고침해주세요.');
+        });
+    </script>
+</body>
+</html>
