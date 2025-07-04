@@ -2,7 +2,11 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#E33D37">
     <title>작심큰일 챌린지 - 문제 풀이 공간</title>
     <style>
         * {
@@ -16,6 +20,22 @@
             background-color: #f8f9fa;
             color: #333;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* 텍스트 선택 허용 */
+        p, span, div, input, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
         
         .container {
@@ -74,6 +94,13 @@
             text-decoration: none;
             display: inline-block;
             text-align: center;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         .btn-primary {
@@ -443,20 +470,260 @@
         /* 반응형 */
         @media (max-width: 768px) {
             .container {
-                padding: 0 16px;
+                padding: 0 12px;
             }
             
             .card {
                 padding: 16px;
+                margin-bottom: 16px;
             }
             
             .login-card {
                 padding: 24px;
                 margin: 16px;
+                max-width: 100%;
             }
             
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .stat-card {
+                padding: 16px;
+            }
+            
+            .stat-number {
+                font-size: 24px;
+            }
+            
+            /* 헤더 모바일 최적화 */
+            .header {
+                padding: 12px 0;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch;
+            }
+            
+            .logo {
+                justify-content: center;
+            }
+            
+            .logo img {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .logo-text {
+                font-size: 16px;
+            }
+            
+            .user-info {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            /* 네비게이션 모바일 최적화 */
+            .nav-list {
+                flex-wrap: wrap;
+                gap: 0;
+            }
+            
+            .nav-item {
+                flex: 1;
+                min-width: 0;
+                padding: 12px 8px;
+                font-size: 13px;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            /* 폼 요소 모바일 최적화 */
+            .form-input {
+                padding: 16px;
+                font-size: 16px; /* iOS에서 줌 방지 */
+            }
+            
+            .btn {
+                padding: 16px 20px;
+                font-size: 16px;
+                min-height: 48px; /* 터치 친화적 */
+            }
+            
+            /* 모달 모바일 최적화 */
+            .modal-content {
+                margin: 16px;
+                padding: 20px;
+                max-height: 90vh;
+                width: calc(100% - 32px);
+            }
+            
+            /* IDE 모바일 최적화 */
+            .ide-container {
+                margin: 12px 0;
+            }
+            
+            .ide-header {
+                padding: 8px 12px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .code-editor {
+                padding: 16px;
+                font-size: 13px;
+                min-height: 200px;
+            }
+            
+            /* 타이머 모바일 최적화 */
+            .timer-display {
+                padding: 12px;
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+            
+            .timer-time {
+                font-size: 20px;
+            }
+            
+            /* 캘린더 모바일 최적화 */
+            .calendar-week {
+                gap: 4px;
+            }
+            
+            .calendar-day {
+                width: 28px;
+                height: 28px;
+                font-size: 11px;
+            }
+            
+            /* 카드 제목 모바일 최적화 */
+            .card-title {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+            
+            /* 알림 모바일 최적화 */
+            .alert {
+                padding: 12px;
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+        }
+        
+        /* 작은 모바일 화면 (320px ~ 480px) */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 8px;
+            }
+            
+            .card {
+                padding: 12px;
+            }
+            
+            .login-card {
+                padding: 20px;
+                margin: 12px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .nav-item {
+                padding: 10px 4px;
+                font-size: 12px;
+            }
+            
+            .btn {
+                padding: 14px 16px;
+                font-size: 14px;
+            }
+            
+            .modal-content {
+                margin: 8px;
+                padding: 16px;
+                width: calc(100% - 16px);
+            }
+            
+            .code-editor {
+                padding: 12px;
+                font-size: 12px;
+            }
+            
+            .timer-time {
+                font-size: 18px;
+            }
+            
+            .calendar-day {
+                width: 24px;
+                height: 24px;
+                font-size: 10px;
+            }
+        }
+        
+        /* 모바일 스크롤 최적화 */
+        @media (max-width: 768px) {
+            html {
+                -webkit-overflow-scrolling: touch;
+                scroll-behavior: smooth;
+            }
+            
+            body {
+                overflow-x: hidden;
+            }
+            
+            .page {
+                overflow-x: hidden;
+            }
+            
+            /* 모바일에서 스크롤 성능 향상 */
+            .card, .modal-content, .ide-container {
+                will-change: transform;
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+            }
+            
+            /* 모바일에서 터치 피드백 개선 */
+            .nav-item:active,
+            .btn:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
+            
+            /* 모바일에서 긴 텍스트 처리 */
+            .card-title,
+            .stat-label,
+            .form-label {
+                word-break: keep-all;
+                overflow-wrap: break-word;
+            }
+            
+            /* 모바일에서 코드 에디터 스크롤 최적화 */
+            .code-editor {
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+            }
+            
+            .code-editor::-webkit-scrollbar {
+                width: 4px;
+            }
+            
+            .code-editor::-webkit-scrollbar-track {
+                background: #2d2d2d;
+            }
+            
+            .code-editor::-webkit-scrollbar-thumb {
+                background: #555;
+                border-radius: 2px;
             }
         }
         
